@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import static in.hackveda.zxing.R.id.scan;
+
 public class MainActivity extends AppCompatActivity {
     Button bt1;
     TextView tv1;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt1=(Button)findViewById(R.id.scan);
+        bt1=(Button)findViewById(scan);
         final Activity activity=this;
         tv1=(TextView)findViewById(R.id.tv);
         lv=(ListView)findViewById(R.id.listview) ;
@@ -40,8 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 integrator.setBarcodeImageEnabled(false);
                 integrator.initiateScan();
 
+
             }
         });
+        MyDatabase scan1=new MyDatabase(this);
+        scan1.open();
+        String scanner=scan1.read();
+        tv1.setText(scanner);
+        scan1.close();
+
+
     }
 
     @Override
@@ -60,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     scan.open();
                     scan.write(code);
 
-                String scanner=scan.read();
+              String scanner=scan.read();
                 tv1.setText(scanner);
 
 
